@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en" ng-app="appTodo">
+<head>
+  <meta charset="utf-8">
+  <title>TODOs</title>
+  <!--<link rel="stylesheet" href="css/app.css">-->
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <style type="text/css">
+    
+    body {
+      padding-bottom: 40px;
+      background-color: #6c89b0;
+    }
+
+    .container-narrow {
+      margin: -5px auto 0 auto;
+      max-width: 400px;
+      border: solid 4px #546988;
+      background-color: #fff;
+      -webkit-border-bottom-left-radius:  15px;
+      -webkit-border-bottom-right-radius: 15px;
+    }
+
+    .jumbotron {
+      padding: 50px 0 20px 0;
+      text-align: center;
+    }
+    .jumbotron h1 {
+      font-size: 72px;
+      line-height: 1;
+    }
+
+
+    .wrapper-todos { 
+      padding: 20px 0;
+      background-color: #e1eeff; 
+    }
+    .wrapper-dones { 
+      padding: 20px 0;
+      background-color: #454545; 
+      -webkit-border-bottom-left-radius:  10px;
+      -webkit-border-bottom-right-radius: 10px;
+    }
+
+    .todos { padding: 0 5%; }
+    .todos .pointer { cursor: pointer; }
+    .todos .icon-trash { float: right; margin-top: 2px; }
+    .todos .form-inline { margin: 0; }
+    .todos .textField { width: 75%; }
+    .todos .isDone { text-decoration: line-through; }
+    .todos input[type="checkbox"] { margin: 0 0 2px 0; }
+
+    .wrapper-dones {
+      color: #a9a9a9;
+    }
+
+  </style>
+</head>
+<body>
+ 
+  <div class="container-narrow"  ng-controller="todosController">
+
+    <script type="text/ng-template" id="dotoTpl.html">
+      <form ng-submit="updateTodo(todo)" class="form-inline">
+
+        <i class="pointer icon-fire" ng-hide="todo.done" ng-click="toggleDone(todo)"></i>
+        <i class="pointer icon-ok icon-white"   ng-show="todo.done" ng-click="toggleDone(todo)"></i>
+
+        <span  ng-hide="todo.edit" ng-class="{isDone: todo.done}" ng-dblclick="todo.toggleEdit()">{{todo.message}}</span>
+        <i class="pointer icon-trash icon-white" ng-show="todo.done" ng-click="removeTodo(todo)"></i> 
+
+        <input type="text" ng-model="todo.message" ng-show="todo.edit" class="textField" />
+        <span  ng-show="todo.edit" ng-click="updateTodo(todo)" class="btn btn-info"><i class="icon-pencil"></i></span>
+      </form>
+    </script>
+
+    <div class="jumbotron">
+      <h1>TODOs</h1>
+
+      <form ng-submit="addTodo()" class="form-inline">
+        <input type="text" ng-model="newTodo.message" placeholder="Ajouter une tache" autofocus />
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+      </form>
+    </div>
+
+    <div class="wrapper">
+      <div class="wrapper-todos">
+
+        
+        <ul class="todos unstyled" >
+          <li todoitem todo="todo" ng-repeat="todo in todos | filter:filterByTodo"> </li>
+        </ul>
+        
+      </div>
+    </div>
+    <div class="wrapper">
+      <div class="wrapper-dones">
+
+        <ul class="todos unstyled" >
+          <li todoitem todo="todo" ng-repeat="todo in todos | filter:filterByDone"> </li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/vendors/angular.js"></script>
+  <script src="/js/vendors/angular-resource.js"></script>
+  <script src="/js/app.js" type="text/javascript"></script>
+</body>
+</html>

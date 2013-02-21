@@ -1,0 +1,6 @@
+development:
+  sessions:
+    default:
+      database: todos
+      hosts:
+        - localhost:27017
